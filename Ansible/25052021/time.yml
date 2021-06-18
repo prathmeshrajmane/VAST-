@@ -1,0 +1,12 @@
+---
+  - hosts : all
+    remote_user : root
+    become : true
+    tasks:
+        - name: Set Asia/Kolkata timezone
+          timezone: name=Asia/Kolkata
+          become: yes
+        - name: Timezone
+          shell: timedatectl
+          register: ps
+        - debug: var=ps.stdout_lines

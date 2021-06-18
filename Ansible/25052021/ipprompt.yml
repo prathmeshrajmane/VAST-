@@ -1,0 +1,18 @@
+---
+  - hosts : all
+    remote_user : root
+    become : true
+    vars_prompt:
+         - name: ip_add
+           prompt: "Enter ip address for validation"
+           private: no
+
+    tasks:
+         - name: print name
+           assert: that="ip_add.strip()"
+           args:
+            msg: "The ip_add argument shouldn't be empty!"
+
+         - debug:
+            msg: "Valid IP addresses in '$ip_add': {{ ip_add | ipv4 }}"
+

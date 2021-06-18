@@ -1,0 +1,13 @@
+---
+  - hosts : all
+    remote_user : root
+    become : true
+
+    vars:
+         ip_list: [10.1.1.0/24, a.b.c.d, 255.255.255.2551, 172.16.1.9, 192.168.6.1/32, 10.3.5.777, 224.0.0.10]
+
+    tasks:
+         - name: Show valid IP Address in the list of strings
+           debug:
+            msg: "Valid IP addresses in 'ip_list': {{ ip_list | ipv4 }}"
+

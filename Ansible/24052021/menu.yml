@@ -1,0 +1,179 @@
+---
+  - hosts : all
+    remote_user : root
+    become : true
+    vars_prompt:
+      - name: "application"
+        prompt: "Please enter your choice: \n1- cpu Cores\n2- vendor_id\n3- cpu family\n4- cache size\n5- model name\n6- microcode\n7- cpu MHz\n8- MemTotal\n9- MemFree\n10- MemAvailable\n11- Buffers\n12- SwapCached\n13- Linux version\n14- uptime\n15- loadavg\n16- List all PCI devices\n17- Open Port\n18- Free Disk\n"
+        private: no
+    tasks:  
+       - set_fact: menu=cpu cores
+         when: ( application == "1" )
+  
+       - set_fact: menu=vendor_id
+         when: ( application == "2" )
+
+       - set_fact: menu=cpu family
+         when: ( application == "3" )
+
+       - set_fact: menu=cache size
+         when: ( application == "4" )
+
+       - set_fact: menu=model name
+         when: ( application == "5" )
+
+       - set_fact: menu=microcode
+         when: ( application == "6" )
+
+       - set_fact: menu=cpu MHz
+         when: ( application == "7" )
+
+       - set_fact: menu=MemTotal
+         when: ( application == "8" )
+
+       - set_fact: menu=MemFree
+         when: ( application == "9" )
+
+       - set_fact: menu=MemAvailable
+         when: ( application == "10" )
+
+       - set_fact: menu=Buffers
+         when: ( application == "11" )
+
+       - set_fact: menu=SwapCached
+         when: ( application == "12" )
+
+       - set_fact: menu=Linux version
+         when: ( application == "13" )
+
+       - set_fact: menu=uptime
+         when: ( application == "14" )
+
+       - set_fact: menu=loadavg
+         when: ( application == "15" )
+
+       - set_fact: menu=List all PCI devices
+         when: ( application == "16" )
+
+       - set_fact: menu=Open Port
+         when: ( application == "17" )
+
+       - set_fact: menu=Free Disk
+         when: ( application == "18" )
+  
+
+       - name: cpu cores
+         shell: cat /proc/cpuinfo | grep 'cpu cores' | tail -1
+         register: ps
+       - debug: var=ps.stdout_lines
+         when: ( application == "1" )
+
+       - name: vendor_id
+         shell: cat /proc/cpuinfo | grep 'vendor_id' | tail -1
+         register: ps
+       - debug: var=ps.stdout_lines
+         when: ( application == "2" )
+
+       - name: cpu family
+         shell:  cat /proc/cpuinfo | grep 'cpu family' | tail -1
+         register: ps
+       - debug: var=ps.stdout_lines
+         when: ( application == "3" )
+
+       - name: cache size
+         shell: cat /proc/cpuinfo | grep 'cache size' | tail -1
+         register: ps
+       - debug: var=ps.stdout_lines
+         when: ( application == "4" )
+
+       - name: model name
+         shell: cat /proc/cpuinfo | grep 'model name' | tail -1
+         register: ps
+       - debug: var=ps.stdout_lines
+         when: ( application == "5" )
+
+
+       - name: microcode
+         shell: cat /proc/cpuinfo | grep 'microcode' | tail -1
+         register: ps
+       - debug: var=ps.stdout_lines
+         when: ( application == "6" )
+
+
+       - name: cpu MHz
+         shell: cat /proc/cpuinfo | grep 'cpu MHz' | tail -1
+         register: ps
+       - debug: var=ps.stdout_lines
+         when: ( application == "7" )
+
+       - name: MemTotal
+         shell: cat /proc/meminfo | grep 'MemTota' | tail -1
+         register: ps
+       - debug: var=ps.stdout_lines
+         when: ( application == "8" )
+
+       - name: MemFree
+         shell: cat /proc/meminfo | grep 'MemFree' | tail -1
+         register: ps
+       - debug: var=ps.stdout_lines
+         when: ( application == "9" )
+
+
+       - name: MemAvailable
+         shell: cat /proc/meminfo | grep 'MemAvailable' | tail -1
+         register: ps
+       - debug: var=ps.stdout_lines
+         when: ( application == "10" )
+
+       - name: Buffers
+         shell: cat /proc/meminfo | grep 'Buffers' | tail -1
+         register: ps
+       - debug: var=ps.stdout_lines
+         when: ( application == "11" )
+
+       - name: SwapCached
+         shell: cat /proc/swaps
+         register: ps
+       - debug: var=ps.stdout_lines
+         when: ( application == "12" )
+
+       - name: Linux version
+         shell: cat /proc/version | grep 'Linux version ' | tail -1
+         register: ps
+       - debug: var=ps.stdout_lines
+         when: ( application == "13" )
+
+       - name: uptime
+         shell: cat /proc/uptime
+         register: ps
+       - debug: var=ps.stdout_lines
+         when: ( application == "14" )
+
+       - name: loadavg
+         shell: cat /proc/loadavg
+         register: ps
+       - debug: var=ps.stdout_lines
+         when: ( application == "15" )
+
+       - name: List all PCI devices
+         shell: lspci
+         register: ps
+       - debug: var=ps.stdout_lines
+         when: ( application == "16" )
+
+       - name: Open Port
+         shell: lsof | tail -n 10
+         register: ps
+       - debug: var=ps.stdout_lines
+         when: ( application == "17" )
+
+
+       - name: Free Disk
+         shell: df -hT
+         register: ps
+       - debug: var=ps.stdout_lines
+         when: ( application == "18" )
+
+
+ #        with_items: "{{ prompt }}"
+
