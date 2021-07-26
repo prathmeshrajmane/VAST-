@@ -1,0 +1,13 @@
+- hosts: all
+  user: root
+  become: True
+  tasks:
+   - name: Install all the packages
+     yum:
+       name: '{{ item }}'
+       state: present
+       update_cache: True
+     loop:
+     - httpd
+     - php
+     - vsftpd

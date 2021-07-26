@@ -1,0 +1,9 @@
+- hosts: all
+  user: root
+  become: True
+  tasks:
+      - name: Install 5 packages
+        yum:
+          name: ['httpd', 'php', 'vsftpd', 'git', 'wget']
+          state: present
+          update_cache: True

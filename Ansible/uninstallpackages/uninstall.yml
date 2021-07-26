@@ -1,0 +1,9 @@
+ - hosts: all
+   user: root
+   become: True
+   tasks:
+         - name: uninstalling 5 packages
+           yum:
+               name: ['httpd', 'php', 'vsftpd', 'git', 'wget']
+               state: absent
+               update_cache: yes

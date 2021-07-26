@@ -1,0 +1,14 @@
+ - hosts: all
+   user: root
+   become: True
+   tasks:
+        - name: Create new user
+          user:
+             name: mahesh
+             password: password
+             groups:
+             state: present
+             shell: /bin/bash
+             system: no
+             createhome: yes
+             home: /home/mahesh
