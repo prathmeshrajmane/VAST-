@@ -1,0 +1,8 @@
+ - hosts: all
+   user: root
+   become: True
+   tasks:
+       - name: Run a script with arguments (free form)
+         script: memory.sh
+         register: out
+       - debug: var=out.stdout_lines
