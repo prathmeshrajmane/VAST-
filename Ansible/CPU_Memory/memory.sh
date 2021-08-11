@@ -11,5 +11,9 @@ if (( $ola < $mem_threshold )); then
     echo "current memory usage is less than $mem_threshold%"
     else
     echo "Memory usage is greather than $mem_threshold%"
+     echo "sending alert to master"
+     #lwall -n "Memory usage is greather than $mem_threshold%"
+     logger -p emerg "Memory usage is greather than $mem_threshold%"
+
 fi
 
